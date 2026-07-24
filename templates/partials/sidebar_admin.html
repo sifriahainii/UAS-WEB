@@ -1,0 +1,14 @@
+<aside class="sidebar">
+    <div class="sidebar-user"><span class="avatar">A</span><div><strong>{{ request.user.first_name|default:request.user.username }}</strong><small>Administrator</small></div></div>
+    <nav>
+        <a href="{% url 'administrator_dashboard' %}">⌂ <span>Dashboard</span></a>
+        <a href="{% url 'administrator_event_list' %}">◫ <span>Data Event</span></a>
+        <a href="{% url 'administrator_kategori_list' %}">▣ <span>Kategori Tiket</span></a>
+        <a href="{% url 'administrator_customer_list' %}">♙ <span>Data Customer</span></a>
+        <a href="{% url 'administrator_petugas_list' %}">♟ <span>Data Petugas</span></a>
+        <a href="{% url 'administrator_pendaftaran_list' %}">≣ <span>Data Pendaftaran</span></a>
+        <a href="{% url 'administrator_laporan' %}">▤ <span>Laporan</span></a>
+        <a href="/admin/">⚙ <span>Django Admin</span></a>
+        <a href="{% url 'logout' %}">↪ <span>Keluar</span></a>
+    </nav>
+</aside>

@@ -1,0 +1,11 @@
+<aside class="sidebar">
+    <div class="sidebar-user"><span class="avatar">{{ request.user.petugas_profile.nama_lengkap|slice:':1'|upper }}</span><div><strong>{{ request.user.petugas_profile.nama_lengkap }}</strong><small>Petugas</small></div></div>
+    <nav>
+        <a href="{% url 'petugas_dashboard' %}">⌂ <span>Dashboard</span></a>
+        <a href="{% url 'daftar_pembayaran' %}">✓ <span>Verifikasi Pembayaran</span></a>
+        <a href="{% url 'daftar_peserta' %}">♙ <span>Data Peserta</span></a>
+        <a href="{% url 'check_in_kode' %}"># <span>Check-in Kode Unik</span></a>
+        <a href="{% url 'riwayat_checkin' %}">≡ <span>Riwayat Check-in</span></a>
+        <a href="{% url 'logout' %}">↪ <span>Keluar</span></a>
+    </nav>
+</aside>
