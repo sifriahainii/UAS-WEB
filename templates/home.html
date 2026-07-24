@@ -1,0 +1,19 @@
+{% extends 'base.html' %}{% load static colorrun_tags %}
+{% block title %}ColorRun Vest — Ceria, Energik, Siap Berlari{% endblock %}
+{% block content %}
+<section class="hero">
+    <div class="container hero-grid">
+        <div class="hero-copy">
+            <span class="eyebrow">ColorRun Vest 2026</span>
+            <h1>Lari penuh warna,<br><span>lebih mudah dari pendaftaran.</span></h1>
+            <p>Temukan event, pilih kategori tiket, unggah bukti pembayaran, lalu gunakan kode unik saat check-in. Tanpa antre scan QR.</p>
+            <div class="hero-actions"><a class="btn btn-primary btn-lg" href="{% url 'event_list' %}">Lihat Tiket</a>{% if current_role == 'guest' %}<a class="btn btn-light btn-lg" href="{% url 'register' %}">Daftar Sekarang</a>{% endif %}</div>
+            <div class="hero-facts"><div><strong>3</strong><span>Hak akses</span></div><div><strong>100%</strong><span>Berbasis Django</span></div><div><strong>#Kode</strong><span>Check-in cepat</span></div></div>
+        </div>
+        <div class="hero-art"><img src="{% static 'img/hero-run.svg' %}" alt="Ilustrasi peserta ColorRun"><div class="floating-card card-one"><b>✓ Pembayaran</b><span>Diverifikasi petugas</span></div><div class="floating-card card-two"><b># RUN-A7K9P2</b><span>Kode check-in peserta</span></div></div>
+    </div>
+</section>
+<section class="section feature-strip"><div class="container feature-grid"><article><span class="feature-icon">▣</span><div><h3>Event Terstruktur</h3><p>Informasi jadwal, lokasi, kategori, harga, dan kuota tersedia jelas.</p></div></article><article><span class="feature-icon">⌁</span><div><h3>Pembayaran Praktis</h3><p>Customer mengunggah bukti, petugas melakukan verifikasi status.</p></div></article><article><span class="feature-icon">#</span><div><h3>Kode Unik Check-in</h3><p>Petugas cukup mengetik kode peserta sehingga proses lebih sederhana.</p></div></article></div></section>
+<section class="section section-soft"><div class="container"><div class="section-heading"><div><span class="eyebrow">Event Pilihan</span><h2>Siap ikut ColorRun?</h2></div><a href="{% url 'event_list' %}">Lihat semua event →</a></div><div class="event-grid">{% for event in events %}{% include 'partials/event_card.html' with event=event %}{% empty %}<div class="empty-state"><strong>Belum ada event yang dipublikasikan.</strong><p>Administrator dapat menambahkan event melalui dashboard.</p></div>{% endfor %}</div></div></section>
+<section class="section"><div class="container"><div class="section-heading centered"><div><span class="eyebrow">Alur Sistem</span><h2>Dari daftar sampai garis start</h2><p>Alur dibuat ringkas tanpa diagram rumit.</p></div></div><div class="steps"><div><span>1</span><h3>Buat akun</h3><p>Customer registrasi dan login.</p></div><div><span>2</span><h3>Pilih tiket</h3><p>Lihat event dan isi data peserta.</p></div><div><span>3</span><h3>Bayar</h3><p>Unggah bukti pembayaran.</p></div><div><span>4</span><h3>Verifikasi</h3><p>Petugas menerima atau menolak bukti.</p></div><div><span>5</span><h3>Check-in</h3><p>Masukkan kode unik pada hari acara.</p></div></div></div></section>
+{% endblock %}

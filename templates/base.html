@@ -1,0 +1,68 @@
+{% load static colorrun_tags %}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aplikasi pendaftaran event dan penjualan tiket ColorRun Vest">
+    <title>{% block title %}ColorRun Vest{% endblock %}</title>
+    <link rel="icon" href="{% static 'img/logo-mark.svg' %}" type="image/svg+xml">
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+<header class="topbar">
+    <div class="container topbar-inner">
+        <a class="brand" href="{% url 'home' %}" aria-label="ColorRun Vest">
+            <img src="{% static 'img/logo-mark.svg' %}" alt="" width="42" height="42">
+            <span><strong>ColorRun</strong><small>Vest</small></span>
+        </a>
+        <button class="nav-toggle" type="button" aria-label="Buka navigasi" data-nav-toggle>☰</button>
+        <nav class="topnav" data-nav>
+            <a href="{% url 'home' %}">Beranda</a>
+            <a href="{% url 'event_list' %}">Event & Tiket</a>
+            {% if current_role == 'customer' %}
+                <a href="{% url 'customer_dashboard' %}">Dashboard</a>
+                <a href="{% url 'profile' %}">Profil</a>
+                <a class="btn btn-sm btn-outline" href="{% url 'logout' %}">Keluar</a>
+            {% elif current_role == 'petugas' %}
+                <a href="{% url 'petugas_dashboard' %}">Dashboard Petugas</a>
+                <a class="btn btn-sm btn-outline" href="{% url 'logout' %}">Keluar</a>
+            {% elif current_role == 'administrator' %}
+                <a href="{% url 'administrator_dashboard' %}">Dashboard Admin</a>
+                <a class="btn btn-sm btn-outline" href="{% url 'logout' %}">Keluar</a>
+            {% else %}
+                <a href="{% url 'login' %}">Masuk</a>
+                <a class="btn btn-sm btn-primary" href="{% url 'register' %}">Daftar</a>
+            {% endif %}
+        </nav>
+    </div>
+</header>
+
+{% if messages %}
+<div class="message-stack container" aria-live="polite">
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags|default:'info' }}" data-alert>
+            <span>{{ message }}</span><button type="button" aria-label="Tutup" data-alert-close>×</button>
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<main>{% block content %}{% endblock %}</main>
+
+<footer class="footer">
+    <div class="container footer-grid">
+        <div>
+            <div class="brand footer-brand"><img src="{% static 'img/logo-mark.svg' %}" alt=""><span><strong>ColorRun</strong><small>Vest</small></span></div>
+            <p>Aplikasi pendaftaran event, pembayaran, validasi tiket, dan check-in dengan kode unik.</p>
+        </div>
+        <div><strong>Menu</strong><a href="{% url 'event_list' %}">Event</a><a href="{% url 'login' %}">Login</a></div>
+        <div><strong>Kontak</strong><span>{{ pengaturan_sistem.email_admin|default:'admin@colorrunvest.id' }}</span><span>{{ pengaturan_sistem.nomor_whatsapp|default:'0812-0000-2026' }}</span></div>
+    </div>
+    <div class="container footer-bottom">© 2026 ColorRun Vest — Kelompok 4 Web Programming Kelas B.</div>
+</footer>
+<script src="{% static 'js/app.js' %}"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,9 @@
+<aside class="sidebar">
+    <div class="sidebar-user"><span class="avatar">{{ request.user.customer_profile.nama_lengkap|slice:':1'|upper }}</span><div><strong>{{ request.user.customer_profile.nama_lengkap }}</strong><small>Customer</small></div></div>
+    <nav>
+        <a href="{% url 'customer_dashboard' %}">⌂ <span>Dashboard</span></a>
+        <a href="{% url 'event_list' %}">◫ <span>Cari Event</span></a>
+        <a href="{% url 'profile' %}">◎ <span>Profil Saya</span></a>
+        <a href="{% url 'logout' %}">↪ <span>Keluar</span></a>
+    </nav>
+</aside>
