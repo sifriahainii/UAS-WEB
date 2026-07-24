@@ -8,8 +8,18 @@ from django.shortcuts import get_object_or_404, redirect, render
 from colorrun.utils import role_required, write_log
 from customer.models import Customer, Pendaftaran, Pembayaran
 from petugas.models import CheckIn, Petugas
-from .forms import EventForm, KategoriTiketForm, PetugasCreateForm, PetugasEditForm
-from .models import Event, KategoriTiket, LogAktivitas
+from .forms import (
+    EventForm, 
+    KategoriTiketForm, 
+    PetugasCreateForm, 
+    PetugasEditForm,
+)
+
+from .models import (
+    Event, 
+    KategoriTiket, 
+    LogAktivitas,
+)
 
 
 @role_required("administrator")
