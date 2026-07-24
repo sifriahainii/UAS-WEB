@@ -1,1 +1,125 @@
-{% extends 'base.html' %}{% load colorrun_tags %}{% block title %}Data Event{% endblock %}{% block content %}<div class="dashboard-shell container-wide">{% include 'partials/sidebar_admin.html' %}<section class="dashboard-content"><div class="dashboard-heading"><div><span class="eyebrow">Master Data</span><h1>Data Event</h1><p>Kelola informasi kegiatan ColorRun.</p></div><a class="btn btn-primary" href="{% url 'administrator_event_create' %}">+ Tambah Event</a></div><div class="panel"><form class="filter-bar" method="get"><input class="form-control" name="q" value="{{ query }}" placeholder="Cari nama event atau lokasi"><button class="btn btn-primary">Cari</button></form><div class="table-wrap"><table><thead><tr><th>Event</th><th>Tanggal & Lokasi</th><th>Kuota</th><th>Terjual</th><th>Status</th><th>Aksi</th></tr></thead><tbody>{% for event in events %}<tr><td><strong>{{ event.nama_event }}</strong><small>{{ event.slug }}</small></td><td>{{ event.tanggal_mulai|date:'d M Y' }}<small>{{ event.lokasi }}</small></td><td>{{ event.total_kuota }}</td><td>{{ event.total_tiket_terjual }}</td><td><span class="badge badge-{{ event.status|status_class }}">{{ event.get_status_display }}</span></td><td class="actions"><a class="table-link" href="{% url 'detail_event' event.slug %}" target="_blank">Lihat</a><a class="table-link" href="{% url 'administrator_event_update' event.pk %}">Edit</a><a class="table-link danger" href="{% url 'administrator_event_delete' event.pk %}">Hapus</a></td></tr>{% empty %}<tr><td colspan="6"><div class="empty-state small">Belum ada event.</div></td></tr>{% endfor %}</tbody></table></div></div></section></div>{% endblock %}
+{% extends "base.html" %}
+
+{% block title %}Data Event{% endblock %}
+
+{% block content %}
+
+<section class="container" style="padding:40px 0;">
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+        <div>
+            <h2>Data Event</h2>
+            <p>Kelola seluruh event ColorRun Vest.</p>
+        </div>
+
+        <a href="{% url 'administrator_event_create' %}" class="btn btn-primary">
+            + Tambah Event
+        </a>
+    </div>
+
+    <form method="get" style="margin-bottom:20px;">
+        <input
+            type="text"
+            name="q"
+            placeholder="Cari nama event atau lokasi..."
+            value="{{ query }}"
+            style="width:100%;padding:12px;border:1px solid #ddd;border-radius:8px;">
+    </form>
+
+    <div style="overflow-x:auto;">
+
+        <table style="width:100%;border-collapse:collapse;">
+
+            <thead>
+
+                <tr style="background:#f4f4f4;">
+
+                    <th style="padding:12px;">No</th>
+                    <th>Nama Event</th>
+                    <th>Lokasi</th>
+                    <th>Tanggal</th>
+                    <th>Status</th>
+                    <th>Total Tiket</th>
+                    <th>Terjual</th>
+                    <th>Sisa</th>
+                    <th>Aksi</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+            {% for event in events %}
+
+                <tr>
+
+                    <td style="padding:12px;">
+                        {{ forloop.counter }}
+                    </td>
+
+                    <td>
+                        {{ event.nama_event }}
+                    </td>
+
+                    <td>
+                        {{ event.lokasi }}
+                    </td>
+
+                    <td>
+                        {{ event.tanggal_mulai }}
+                    </td>
+
+                    <td>
+                        {{ event.get_status_display }}
+                    </td>
+
+                    <td>
+                        {{ event.total_kuota }}
+                    </td>
+
+                    <td>
+                        {{ event.total_tiket_terjual }}
+                    </td>
+
+                    <td>
+                        {{ event.total_tiket_tersedia }}
+                    </td>
+
+                    <td>
+
+                        <a href="{% url 'administrator_event_update' event.id %}"
+                           class="btn btn-outline">
+                            Edit
+                        </a>
+
+                        <a href="{% url 'administrator_event_delete' event.id %}"
+                           class="btn btn-primary">
+                            Hapus
+                        </a>
+
+                    </td>
+
+                </tr>
+
+            {% empty %}
+
+                <tr>
+
+                    <td colspan="9" style="text-align:center;padding:30px;">
+                        Belum ada data event.
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+{% endblock %}
