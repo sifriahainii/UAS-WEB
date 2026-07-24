@@ -21,6 +21,7 @@ from .models import (
 )
 
 
+
 @role_required("administrator")
 def administrator_dashboard(request):
     confirmed = Pendaftaran.objects.filter(status_pendaftaran__in=["dikonfirmasi", "check_in", "selesai"])
