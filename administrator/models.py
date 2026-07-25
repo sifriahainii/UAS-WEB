@@ -48,18 +48,14 @@ class Event(models.Model):
     )
     deskripsi = models.TextField()
     tanggal_mulai = models.DateField()
-    tanggal_selesai = models.DateField(blank=True, null=True)
     jam_mulai = models.TimeField()
     jam_selesai = models.TimeField(blank=True, null=True)
     lokasi = models.CharField(max_length=255)
-    google_maps = models.URLField(blank=True)
     dress_code = models.CharField(max_length=200, blank=True)
     rute_color_run = models.TextField(blank=True)
     fasilitas = models.TextField(blank=True, help_text="Tuliskan satu fasilitas pada setiap baris.")
-    hadiah_doorprize = models.TextField(blank=True)
     contact_person = models.CharField(max_length=100)
     nomor_contact_person = models.CharField(max_length=20)
-    faq = models.TextField(blank=True, help_text="Tuliskan pertanyaan dan jawaban yang sering diajukan.")
     status = models.CharField(max_length=20, choices=StatusEvent.choices, default=StatusEvent.DRAFT)
     dibuat_oleh = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,

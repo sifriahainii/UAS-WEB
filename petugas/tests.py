@@ -19,11 +19,19 @@ class StaffFlowTests(TestCase):
         )
         category = KategoriTiket.objects.create(event=event, nama_kategori="Regular", harga=100000, kuota=10)
         self.registration = Pendaftaran.objects.create(
-            customer=customer, event=event, kategori_tiket=category, nama_lengkap="Peserta", email="c2@test.id",
-            nomor_hp="0813", tanggal_lahir=date(2000, 1, 1), jenis_kelamin="L", ukuran_kaos="L",
-            nama_kontak_darurat="Darurat", nomor_kontak_darurat="0814", harga_tiket=100000,
-            status_pendaftaran="dikonfirmasi",
-        )
+        customer=customer,
+        event=event,
+        kategori_tiket=category,
+        nama_lengkap="Peserta",
+        email="c2@test.id",
+        nomor_hp="0813",
+        tanggal_lahir=date(2000, 1, 1),
+        jenis_kelamin="L",
+        ukuran_kaos="L",
+        harga_tiket=100000,
+        status_pendaftaran="dikonfirmasi",
+)
+     
         Pembayaran.objects.create(
             pendaftaran=self.registration, jumlah_pembayaran=100000, status_pembayaran="diterima"
         )
