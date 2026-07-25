@@ -23,14 +23,11 @@ class EventForm(StyledModelForm):
         exclude = ["slug", "dibuat_oleh"]
         widgets = {
             "tanggal_mulai": forms.DateInput(attrs={"type": "date"}),
-            "tanggal_selesai": forms.DateInput(attrs={"type": "date"}),
             "jam_mulai": forms.TimeInput(attrs={"type": "time"}),
             "jam_selesai": forms.TimeInput(attrs={"type": "time"}),
             "deskripsi": forms.Textarea(attrs={"rows": 5}),
             "rute_color_run": forms.Textarea(attrs={"rows": 3}),
             "fasilitas": forms.Textarea(attrs={"rows": 4}),
-            "hadiah_doorprize": forms.Textarea(attrs={"rows": 3}),
-            "faq": forms.Textarea(attrs={"rows": 4}),
             "poster_event": forms.FileInput(attrs={"accept": ".jpg,.jpeg,.png,.webp"}),
             "banner_event": forms.FileInput(attrs={"accept": ".jpg,.jpeg,.png,.webp"}),
         }

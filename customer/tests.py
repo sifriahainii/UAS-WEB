@@ -27,8 +27,6 @@ class CustomerFlowTests(TestCase):
         response = self.client.post(reverse("daftar_tiket", args=[self.event.slug, self.category.pk]), {
             "nama_lengkap": "Customer Demo", "email": "customer@test.id", "nomor_hp": "08123456789",
             "tanggal_lahir": "2000-01-01", "jenis_kelamin": "P", "ukuran_kaos": "M",
-            "nama_kontak_darurat": "Keluarga", "nomor_kontak_darurat": "08120000000",
-            "riwayat_penyakit": "", "catatan": "",
         })
         self.assertEqual(response.status_code, 302)
         registration = Pendaftaran.objects.get(customer=self.customer)
