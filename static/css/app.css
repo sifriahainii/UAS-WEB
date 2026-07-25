@@ -1251,8 +1251,8 @@ textarea.form-control {
   margin-bottom: 20px;
 }
 
-.stat-grid.four {
-  grid-template-columns: repeat(4, 1fr); /* Empat kartu statistik */
+.stat-grid.three {
+  grid-template-columns: repeat(3, 1fr); /* Empat kartu statistik */
 }
 
 .stat-card {
