@@ -13,9 +13,7 @@
 
         <div class="dashboard-heading">
             <div>
-                <span class="eyebrow">
-                    Pengaturan Akun
-                </span>
+                <span class="eyebrow">Pengaturan Akun</span>
 
                 <h1>Profil Saya</h1>
 
@@ -28,13 +26,12 @@
         <div class="panel form-panel-narrow">
 
             <form
-            method="post"
-            class="form-grid two-cols"
+                method="post"
+                class="form-grid two-cols"
             >
                 {% csrf_token %}
 
                 <div class="profile-preview span-2">
-
                     <span class="avatar large">
                         {{ customer.nama_lengkap|slice:':1'|upper }}
                     </span>
@@ -45,14 +42,40 @@
                         </strong>
 
                         <small>
-                            @{{ request.user.username }}
+                            Akun customer
                         </small>
                     </div>
+                </div>
 
+                {% if form.non_field_errors %}
+                    <div class="span-2">
+                        {% for error in form.non_field_errors %}
+                            <div class="alert alert-error">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <div class="form-group span-2">
+                    <label for="id_username">
+                        Username
+                    </label>
+
+                    <input
+                        class="form-control"
+                        id="id_username"
+                        type="text"
+                        value="{{ request.user.username }}"
+                        readonly
+                    >
+
+                    <small class="help-text">
+                        Username tidak dapat diubah.
+                    </small>
                 </div>
 
                 {% for field in form %}
-
                     <div
                         class="form-group
                         {% if field.name == 'alamat' or field.name == 'nama_lengkap' or field.name == 'email' %}
@@ -65,13 +88,18 @@
 
                         {{ field }}
 
+                        {% if field.help_text %}
+                            <small class="help-text">
+                                {{ field.help_text }}
+                            </small>
+                        {% endif %}
+
                         {% for error in field.errors %}
                             <small class="field-error">
                                 {{ error }}
                             </small>
                         {% endfor %}
                     </div>
-
                 {% endfor %}
 
                 <div class="span-2">
