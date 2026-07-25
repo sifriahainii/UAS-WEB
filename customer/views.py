@@ -180,9 +180,22 @@ def tiket(request, pk):
 @role_required("customer")
 def profile(request):
     customer = request.user.customer_profile
-    form = CustomerProfileForm(request.POST or None, request.FILES or None, instance=customer)
+
+    form = CustomerProfileForm(
+        request.POST or None,
+        instance=customer,
+    )
+
     if request.method == "POST" and form.is_valid():
         form.save()
         messages.success(request, "Profil berhasil diperbarui.")
         return redirect("profile")
-    return render(request, "customer/profile.html", {"form": form, "customer": customer})
+
+    return render(
+        request,
+        "customer/profile.html",
+        {
+            "form": form,
+            "customer": customer,
+        },
+    )

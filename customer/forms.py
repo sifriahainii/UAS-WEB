@@ -118,29 +118,56 @@ class CustomerProfileForm(StyledFormMixin, forms.ModelForm):
 
     class Meta:
         model = Customer
-        fields = ["nama_lengkap", "nomor_hp", "tanggal_lahir", "jenis_kelamin", "alamat", "foto"]
+        fields = [
+            "nama_lengkap",
+            "nomor_hp",
+            "tanggal_lahir",
+            "jenis_kelamin",
+            "alamat",
+        ]
+
         widgets = {
-            "tanggal_lahir": forms.DateInput(attrs={"type": "date"}),
-            "alamat": forms.Textarea(attrs={"rows": 3}),
-            "foto": forms.FileInput(attrs={"accept": ".jpg,.jpeg,.png,.webp"}),
+            "tanggal_lahir": forms.DateInput(
+                attrs={"type": "date"}
+            ),
+            "alamat": forms.Textarea(
+                attrs={"rows": 3}
+            ),
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.apply_styles()
-        self.fields["email"].initial = self.instance.user.email if self.instance.pk else ""
+
+        self.fields["email"].initial = (
+            self.instance.user.email
+            if self.instance.pk
+            else ""
+        )
 
     def clean_email(self):
-        email = self.cleaned_data["email"].lower()
-        if User.objects.filter(email__iexact=email).exclude(pk=self.instance.user_id).exists():
+        email = self.cleaned_data["email"].strip().lower()
+
+        if (
+            User.objects
+            .filter(email__iexact=email)
+            .exclude(pk=self.instance.user_id)
+            .exists()
+        ):
             raise ValidationError("Email sudah digunakan.")
+
         return email
 
     def save(self, commit=True):
         customer = super().save(commit=False)
+
         customer.user.email = self.cleaned_data["email"]
         customer.user.first_name = customer.nama_lengkap
+
         if commit:
-            customer.user.save(update_fields=["email", "first_name"])
+            customer.user.save(
+                update_fields=["email", "first_name"]
+            )
             customer.save()
+
         return customer

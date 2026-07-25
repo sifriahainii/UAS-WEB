@@ -2304,3 +2304,72 @@ code,
     border: 1px solid #aaa;
   }
 }
+/* ==================================================
+   PERBAIKAN DASHBOARD CUSTOMER
+================================================== */
+
+.dashboard-content {
+    width: 100%;
+    min-width: 0;
+}
+
+.dashboard-content > .stat-grid.four {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 16px !important;
+    align-items: stretch;
+    margin-bottom: 22px;
+}
+
+.dashboard-content > .stat-grid.four > .stat-card {
+    width: 100%;
+    min-width: 0;
+    min-height: 145px;
+    margin: 0 !important;
+    padding: 20px;
+    align-content: center;
+}
+
+.dashboard-content > .stat-grid.four > .stat-card span {
+    font-size: 13px;
+}
+
+.dashboard-content > .stat-grid.four > .stat-card strong {
+    font-size: 30px;
+    margin: 8px 0;
+}
+
+.dashboard-content > .stat-grid.four > .stat-card small {
+    font-size: 12px;
+}
+
+.dashboard-content > .panel {
+    margin-top: 0;
+}
+
+.dashboard-content .table-wrap {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.dashboard-content .table-wrap table {
+    width: 100%;
+}
+
+/* Laptop */
+@media (max-width: 1200px) {
+    .dashboard-content > .stat-grid.four {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+/* HP dan tablet kecil */
+@media (max-width: 700px) {
+    .dashboard-content > .stat-grid.four {
+        grid-template-columns: 1fr !important;
+    }
+
+    .dashboard-content > .stat-grid.four > .stat-card {
+        min-height: auto;
+    }
+}
