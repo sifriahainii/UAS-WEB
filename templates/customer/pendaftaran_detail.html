@@ -1,1 +1,176 @@
-{% extends 'base.html' %}{% load colorrun_tags %}{% block title %}Detail Pendaftaran{% endblock %}{% block content %}<div class="dashboard-shell container-wide">{% include 'partials/sidebar_customer.html' %}<section class="dashboard-content"><div class="dashboard-heading"><div><span class="eyebrow">Detail Pendaftaran</span><h1>{{ pendaftaran.event.nama_event }}</h1><p>Kode: {{ pendaftaran.kode_pendaftaran }}</p></div><span class="badge badge-lg badge-{{ pendaftaran.status_pendaftaran|status_class }}">{{ pendaftaran.get_status_pendaftaran_display }}</span></div><div class="detail-dashboard-grid"><div class="panel"><div class="panel-heading"><h2>Data Peserta</h2></div><dl class="detail-list"><div><dt>Nama lengkap</dt><dd>{{ pendaftaran.nama_lengkap }}</dd></div><div><dt>Email</dt><dd>{{ pendaftaran.email }}</dd></div><div><dt>Nomor HP</dt><dd>{{ pendaftaran.nomor_hp }}</dd></div><div><dt>Kategori</dt><dd>{{ pendaftaran.kategori_tiket.nama_kategori }}</dd></div><div><dt>Ukuran kaos</dt><dd>{{ pendaftaran.ukuran_kaos }}</dd></div><div><dt>Kontak darurat</dt><dd>{{ pendaftaran.nama_kontak_darurat }} · {{ pendaftaran.nomor_kontak_darurat }}</dd></div></dl></div><div class="panel"><div class="panel-heading"><h2>Status Pembayaran</h2><span class="badge badge-{{ pendaftaran.pembayaran.status_pembayaran|status_class }}">{{ pendaftaran.pembayaran.get_status_pembayaran_display }}</span></div><dl class="detail-list"><div><dt>Kode pembayaran</dt><dd>{{ pendaftaran.pembayaran.kode_pembayaran }}</dd></div><div><dt>Jumlah</dt><dd class="price">{{ pendaftaran.pembayaran.jumlah_pembayaran|rupiah }}</dd></div>{% if pendaftaran.pembayaran.alasan_penolakan %}<div><dt>Alasan ditolak</dt><dd class="text-danger">{{ pendaftaran.pembayaran.alasan_penolakan }}</dd></div>{% endif %}</dl>{% if pendaftaran.pembayaran.status_pembayaran != 'diterima' %}<a class="btn btn-primary btn-block" href="{% url 'upload_pembayaran' pendaftaran.pk %}">{% if pendaftaran.pembayaran.status_pembayaran == 'ditolak' %}Unggah Ulang Bukti{% else %}Upload Bukti Pembayaran{% endif %}</a>{% endif %}</div></div>{% if pendaftaran.tiket_dapat_dicetak %}<div class="panel code-panel"><div><span class="eyebrow">Kode Check-in Unik</span><h2>{{ pendaftaran.kode_check_in }}</h2><p>Tunjukkan kode ini kepada petugas pada hari pelaksanaan. Kode tidak menggunakan QR dan tidak perlu dipindai.</p></div><a class="btn btn-primary" href="{% url 'tiket' pendaftaran.pk %}">Lihat E-Ticket</a></div>{% else %}<div class="panel info-panel"><strong>E-ticket belum tersedia</strong><p>E-ticket dan kode check-in aktif setelah pembayaran diverifikasi dan diterima petugas.</p></div>{% endif %}</section></div>{% endblock %}
+{% extends 'base.html' %}
+{% load colorrun_tags %}
+
+{% block title %}
+    Detail Pendaftaran
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-shell container-wide">
+
+    {% include 'partials/sidebar_customer.html' %}
+
+    <section class="dashboard-content">
+
+        <div class="dashboard-heading">
+            <div>
+                <span class="eyebrow">Detail Pendaftaran</span>
+
+                <h1>
+                    {{ pendaftaran.event.nama_event }}
+                </h1>
+
+                <p>
+                    Kode: {{ pendaftaran.kode_pendaftaran }}
+                </p>
+            </div>
+
+            <span
+                class="badge badge-lg badge-{{ pendaftaran.status_pendaftaran|status_class }}"
+            >
+                {{ pendaftaran.get_status_pendaftaran_display }}
+            </span>
+        </div>
+
+        <div class="detail-dashboard-grid">
+
+            <!-- Data peserta -->
+            <div class="panel">
+
+                <div class="panel-heading">
+                    <h2>Data Peserta</h2>
+                </div>
+
+                <dl class="detail-list">
+
+                    <div>
+                        <dt>Nama lengkap</dt>
+                        <dd>{{ pendaftaran.nama_lengkap }}</dd>
+                    </div>
+
+                    <div>
+                        <dt>Email</dt>
+                        <dd>{{ pendaftaran.email }}</dd>
+                    </div>
+
+                    <div>
+                        <dt>Nomor HP</dt>
+                        <dd>{{ pendaftaran.nomor_hp }}</dd>
+                    </div>
+
+                    <div>
+                        <dt>Kategori</dt>
+                        <dd>
+                            {{ pendaftaran.kategori_tiket.nama_kategori }}
+                        </dd>
+                    </div>
+
+                    <div>
+                        <dt>Ukuran kaos</dt>
+                        <dd>{{ pendaftaran.ukuran_kaos }}</dd>
+                    </div>
+
+                </dl>
+            </div>
+
+            <!-- Status pembayaran -->
+            <div class="panel">
+
+                <div class="panel-heading">
+                    <h2>Status Pembayaran</h2>
+
+                    <span
+                        class="badge badge-{{ pendaftaran.pembayaran.status_pembayaran|status_class }}"
+                    >
+                        {{ pendaftaran.pembayaran.get_status_pembayaran_display }}
+                    </span>
+                </div>
+
+                <dl class="detail-list">
+
+                    <div>
+                        <dt>Kode pembayaran</dt>
+                        <dd>
+                            {{ pendaftaran.pembayaran.kode_pembayaran }}
+                        </dd>
+                    </div>
+
+                    <div>
+                        <dt>Jumlah</dt>
+                        <dd class="price">
+                            {{ pendaftaran.pembayaran.jumlah_pembayaran|rupiah }}
+                        </dd>
+                    </div>
+
+                    {% if pendaftaran.pembayaran.alasan_penolakan %}
+                        <div>
+                            <dt>Alasan ditolak</dt>
+                            <dd class="text-danger">
+                                {{ pendaftaran.pembayaran.alasan_penolakan }}
+                            </dd>
+                        </div>
+                    {% endif %}
+
+                </dl>
+
+                {% if pendaftaran.pembayaran.status_pembayaran != 'diterima' %}
+                    <a
+                        class="btn btn-primary btn-block"
+                        href="{% url 'upload_pembayaran' pendaftaran.pk %}"
+                    >
+                        {% if pendaftaran.pembayaran.status_pembayaran == 'ditolak' %}
+                            Unggah Ulang Bukti
+                        {% else %}
+                            Upload Bukti Pembayaran
+                        {% endif %}
+                    </a>
+                {% endif %}
+
+            </div>
+        </div>
+
+        {% if pendaftaran.tiket_dapat_dicetak %}
+
+            <div class="panel code-panel">
+
+                <div>
+                    <span class="eyebrow">
+                        Kode Check-in Unik
+                    </span>
+
+                    <h2>
+                        {{ pendaftaran.kode_check_in }}
+                    </h2>
+
+                    <p>
+                        Tunjukkan kode ini kepada petugas pada hari
+                        pelaksanaan. Kode tidak menggunakan QR dan tidak
+                        perlu dipindai.
+                    </p>
+                </div>
+
+                <a
+                    class="btn btn-primary"
+                    href="{% url 'tiket' pendaftaran.pk %}"
+                >
+                    Lihat E-Ticket
+                </a>
+
+            </div>
+
+        {% else %}
+
+            <div class="panel info-panel">
+                <strong>E-ticket belum tersedia</strong>
+
+                <p>
+                    E-ticket dan kode check-in aktif setelah pembayaran
+                    diverifikasi dan diterima petugas.
+                </p>
+            </div>
+
+        {% endif %}
+
+    </section>
+</div>
+{% endblock %}

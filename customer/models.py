@@ -73,9 +73,6 @@ class Pendaftaran(models.Model):
     tanggal_lahir = models.DateField()
     jenis_kelamin = models.CharField(max_length=1, choices=JenisKelamin.choices)
     ukuran_kaos = models.CharField(max_length=3, choices=UkuranKaos.choices)
-    nama_kontak_darurat = models.CharField(max_length=150)
-    nomor_kontak_darurat = models.CharField(max_length=20)
-    riwayat_penyakit = models.TextField(blank=True, help_text="Opsional. Kosongkan jika tidak ada.")
     harga_tiket = models.DecimalField(max_digits=12, decimal_places=2, validators=[MinValueValidator(0)])
     status_pendaftaran = models.CharField(
         max_length=30, choices=StatusPendaftaran.choices, default=StatusPendaftaran.BELUM_DIKONFIRMASI

@@ -74,19 +74,17 @@ class PendaftaranForm(StyledFormMixin, forms.ModelForm):
         model = Pendaftaran
         fields = [
             "nama_lengkap", "email", "nomor_hp", "tanggal_lahir", "jenis_kelamin", "ukuran_kaos",
-            "nama_kontak_darurat", "nomor_kontak_darurat", "riwayat_penyakit", "catatan",
+            
         ]
         widgets = {
             "tanggal_lahir": forms.DateInput(attrs={"type": "date"}),
-            "riwayat_penyakit": forms.Textarea(attrs={"rows": 3}),
-            "catatan": forms.Textarea(attrs={"rows": 3}),
+            
         }
 
     def __init__(self, *args, customer=None, **kwargs):
         super().__init__(*args, **kwargs)
         self.apply_styles()
-        self.fields["riwayat_penyakit"].required = False
-        self.fields["catatan"].required = False
+    
         if customer and not self.is_bound:
             self.initial.update({
                 "nama_lengkap": customer.nama_lengkap,
